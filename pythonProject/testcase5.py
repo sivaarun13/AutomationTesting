@@ -33,6 +33,9 @@ class Testcase5(user):
         except Exception as exp:
             print(f"Error during Test Execution:{exp}")
 
+        finally:
+            self.driver.quit()
+
 if __name__ == "__main__":
     testcase = Testcase5()
     testcase.execute_testcase()

@@ -18,7 +18,20 @@ class Testcase7(user):
             self.driver.maximize_window()
             self.driver.get(url)
 
-        """Testcase steps"""
+            """Testcase steps"""
+            self.validate_home_page_is_visible_successfully()
+            self.click_menu_items('Test Cases')
+            self.validate_entered_test_case_page()
+
+        except Exception as exp:
+            print(f"Error during Test Execution:{exp}")
+
+        finally:
+            self.driver.quit()
+
+if __name__ == "__main__":
+    testcase = Testcase7()
+    testcase.execute_testcase()
 
 
 
@@ -55,7 +68,7 @@ class Testcase7(user):
 #     print("Home is not visible")
 #
 # driver.find_element(By.XPATH, "//a[text()=' Test Cases']").click()
-# verify = driver.find_element(By.XPATH, "//h2/b")
+# verify = driver.find_element(By.XPATH, "//h2/b[text()='Test Cases']")
 # if verify.is_displayed():
 #     print("Test Cases is visible")
 # else:
