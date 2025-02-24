@@ -36,6 +36,8 @@ class Testcase12(user):
             self.click_menu_items('Products')
             self.scroll_down(500)
             self.click_product('2')
+            time.sleep(10)
+            # self.driver.switch_to.default_content()
             self.add_to_cart()
             self.continue_shopping()
             self.click_menu_items('Cart')

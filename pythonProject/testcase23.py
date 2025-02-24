@@ -1,32 +1,25 @@
 import time
-from selenium.webdriver.common.alert import Alert
-from selenium.webdriver.remote.Maintestcase import user  # Corrected import
 from selenium import webdriver
+from selenium.webdriver.remote.Maintestcase import user
 
-from selenium.webdriver.common.by import By
-
-"""
-1. Launch browser
+"""1. Launch browser
 2. Navigate to url 'http://automationexercise.com'
 3. Verify that home page is visible successfully
-4. Click on 'Signup / Login' button
-5. Verify 'New User Signup!' is visible
-6. Enter name and email address
-7. Click 'Signup' button
-8. Verify that 'ENTER ACCOUNT INFORMATION' is visible
-9. Fill details: Title, Name, Email, Password, Date of birth
-10. Select checkbox 'Sign up for our newsletter!'
-11. Select checkbox 'Receive special offers from our partners!'
-12. Fill details: First name, Last name, Company, Address, Address2, Country, State, City, Zipcode, Mobile Number
-13. Click 'Create Account button'
-14. Verify that 'ACCOUNT CREATED!' is visible
-15. Click 'Continue' button
-16. Verify that 'Logged in as username' is visible
-17. Click 'Delete Account' button
-18. Verify that 'ACCOUNT DELETED!' is visible and click 'Continue' button
+4. Click 'Signup / Login' button
+5. Fill all details in Signup and create account
+6. Verify 'ACCOUNT CREATED!' and click 'Continue' button
+7. Verify ' Logged in as username' at top
+8. Add products to cart
+9. Click 'Cart' button
+10. Verify that cart page is displayed
+11. Click Proceed To Checkout
+12. Verify that the delivery address is same address filled at the time registration of account
+13. Verify that the billing address is same address filled at the time registration of account
+14. Click 'Delete Account' button
+15. Verify 'ACCOUNT DELETED!' and click 'Continue' button
 """
 
-class Testcase1(user, Alert):
+class Testcase23(user):
     def execute_testcase(self):
         try:
             """Initialize the browser"""
@@ -35,7 +28,7 @@ class Testcase1(user, Alert):
             self.driver.maximize_window()
             self.driver.get(url)
 
-            """Test case steps"""
+            """Testcase steps """
             self.validate_home_page_is_visible_successfully()
             self.click_menu_items("Signup / Login")
             self.enter_name("Siva Arun")
@@ -46,7 +39,7 @@ class Testcase1(user, Alert):
             self.Day_Month_year("13", "11", "2000")
             self.scroll_down(500)
             self.Checkbox("newsletter")
-            self.Enter_Details(
+            entered_details = self.Enter_Details(
                 "Siva",
                 "Arun",
                 "Commvault",
@@ -63,20 +56,28 @@ class Testcase1(user, Alert):
             self.validate_account_created_is_visible()
             self.click_continue()
             self.validated_logged_in_as_username("Siva Arun")
-            # self.click_menu_items("Delete Account")
-            # self.validate_ACCOUNT_DELETED_is_visible()
-            # self.click_continue()
-
-
+            self.click_menu_items('Home')
+            self.scroll_down(500)
+            self.click_product(1)
+            self.add_to_cart()
+            self.view_cart()
+            self.validate_cart_page()
+            self.proceed_to_checkout()
+            extracted_details = self.validate_address_billing_details_and_review_order()
+            if entered_details == extracted_details:
+                print('Address verification passed: Billing & Delivery details match!')
+            else:
+                print('Address verification failed: Mismatch found!')
+            self.click_menu_items('Delete Account')
+            self.click_continue()
+            
         except Exception as exp:
             print(f"Error during test execution: {exp}")
 
         finally:
-            # Ensure browser is closed
             self.driver.quit()
 
 
-# Run the test case
-if __name__ == "__main__":
-    testcase = Testcase1()
+if __name__ == '__main__':
+    testcase = Testcase23()
     testcase.execute_testcase()

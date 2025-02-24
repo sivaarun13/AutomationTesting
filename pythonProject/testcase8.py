@@ -27,7 +27,7 @@ class Testcase8(user):
             self.click_menu_items('Products')
             self.validate_all_products_page()
             self.scroll_down(1000)
-            self.click_product('5')
+            self.click_product(1)
             details = self.get_product_details()
             if details:
                 print(details)

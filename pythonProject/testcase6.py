@@ -33,7 +33,7 @@ class Testcase6(user):
             self.enter_subject('error')
             self.enter_message('hi')
             self.upload_file('C://Users//arunc//Downloads//OG_INSTA POST.jpg')
-            self.scroll_down()
+            self.scroll_down(300)
             self.input_submit()
             self.click_alert()
             self.validate_success_message()

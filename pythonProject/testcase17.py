@@ -1,3 +1,5 @@
+import time
+
 from selenium import webdriver
 from selenium.webdriver.remote.Maintestcase import user
 
@@ -5,14 +7,14 @@ from selenium.webdriver.remote.Maintestcase import user
 1. Launch browser
 2. Navigate to url 'http://automationexercise.com'
 3. Verify that home page is visible successfully
-4. Click 'Cart' button
-5. Scroll down to footer
-6. Verify text 'SUBSCRIPTION'
-7. Enter email address in input and click arrow button
-8. Verify success message 'You have been successfully subscribed!' is visible
+4. Add products to cart
+5. Click 'Cart' button
+6. Verify that cart page is displayed
+7. Click 'X' button corresponding to particular product
+8. Verify that product is removed from the cart
 """
 
-class Testcase11(user):
+class Testcase17(user):
     def execute_testcase(self):
         try:
             """Initialize the browser"""
@@ -23,11 +25,18 @@ class Testcase11(user):
 
             """Testcase steps """
             self.validate_home_page_is_visible_successfully()
+            self.scroll_down(700)
+            self.click_product(1)
+            self.add_to_cart()
+            self.click_menu_items('Home')
+            self.scroll_down(700)
+            self.click_product(2)
+            self.add_to_cart()
             self.click_menu_items('Cart')
-            self.scroll_down(3000)
-            self.validate_subscription_is_visible()
-            self.subscribe_email('pawankalyan18092002@gmail.com')
-
+            self.validate_cart_page()
+            self.remove_product_from_cart(1)
+            self.remove_product_from_cart(2)
+            self.validate_cart_is_empty()
 
         except Exception as exp:
             print(f"Error during test execution: {exp}")
@@ -35,6 +44,6 @@ class Testcase11(user):
         finally:
             self.driver.quit()
 
-if __name__ == "__main__":
-    testcase = Testcase11()
+if __name__ == '__main__':
+    testcase = Testcase17()
     testcase.execute_testcase()
